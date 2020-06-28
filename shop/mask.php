@@ -55,5 +55,36 @@
           </ul>
         </div>
   </nav>
+  <div class="container-fluid" style="padding-top:25px;">
+      <div class="row" style="text-align: center;">
+        <?php
+          $query = "SELECT * FROM products WHERE status = 'active' AND category = 'mask'";
+          $result = mysqli_query($conn,$query);
+          if(!$result){
+            die("Error Getting Category...");
+          }else{
+            while($row = mysqli_fetch_assoc($result)){
+              $name = $row['name'];
+              $price_range = $row['price'];
+              $image = $row['image'];
+              $pid = $row['productid'];
+              $qt = $row['quantity'];
+              echo '<div class="col-md-3 col-sm-12">';
+              echo '<div class="card" style="width: 18rem;">';
+              echo '<img src="'.$image.'" class="card-img-top" alt="..." style="width: 18rem; height:12rem;">';
+              echo '<div class="card-body">';
+              echo '<h5 class="card-title">'.$name.'</h5>';
+              echo '<p class="card-text" style="text-align:left">
+              ID: '.$pid.'<br>
+              Price: <i class="fas fa-rupee-sign"></i> '.$price_range.'<br>
+              Available: '.$qt.'</p>';
+              echo '<a href="" class="btn btn-success">Buy</a>';
+              echo '</div>';
+              echo '</div>';
+              echo '</div>';
+            }
+          }
+        ?>
+      </div>
 </body>
 </html>

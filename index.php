@@ -65,7 +65,7 @@
           }else{
             while($row = mysqli_fetch_assoc($result)){
               $name = $row['name'];
-              $price_range = $row['pricerange'];
+              $price_range = $row['prange'];
               $image = $row['image'];
               $link = $row['link'];
               echo '<div class="col-md-3 col-sm-12">';
@@ -73,7 +73,7 @@
               echo '<img src="'.$image.'" class="card-img-top" alt="..." style="width: 18rem; height:12rem;">';
               echo '<div class="card-body">';
               echo '<h5 class="card-title">'.$name.'</h5>';
-              echo '<p class="card-text"><i class="fas fa-rupee-sign"></i> '.$price_range.'</p>';
+              echo '<p class="card-text">Price Range: <i class="fas fa-rupee-sign"></i> '.$price_range.'</p>';
               echo '<a href="'.$link.'" class="btn btn-success">Buy</a>';
               echo '</div>';
               echo '</div>';

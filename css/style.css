@@ -231,3 +231,19 @@ body{
 #form h1{
     margin-bottom: 15px;
 }
+
+.card-body{
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    text-transform: capitalize;
+}
+
+.card-title{
+    font-weight: bold;
+}
+
+.card-body a{
+    width: 200px;
+    padding: 5px;
+}
