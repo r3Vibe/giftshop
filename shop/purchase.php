@@ -4,7 +4,35 @@
   $session_status = false;
   if(isset($_SESSION['user'])){
     $session_status = true;
+  }else{
+      header("Location: ../login/");
   }
+?>
+<?php
+if(isset($_GET['productid'])){
+    $pid = $_GET['productid'];
+    $query = "SELECT * FROM products WHERE id = '$pid'";
+    $result = mysqli_query($conn,$query);
+    while($row = mysqli_fetch_assoc($result)){
+        $image = $row['image'];
+        $name = $row['name'];
+        $productid = $row['productid'];
+        $price = $row['price'];
+    }
+}
+?>
+<?php
+$user = $_SESSION['user'];
+$query = "SELECT * FROM users WHERE name = '{$user}'";
+$result = mysqli_query($conn,$query);
+if(!$result){
+    die("error");
+}
+while($row = mysqli_fetch_assoc($result)){
+    $name = $row['fname'];
+    $address = $row['address'];
+    $contact = $row['contact'];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +45,7 @@
   <script src="../jq/jq.js"></script>
   <script src="../jq/bootstrap.js"></script>
   <script src="../jq/style.js"></script>
-  <title>Admin Panel</title>
+  <title>Purchase</title>
 </head>
 <body>
   <nav class="navbar navbar-expand-lg dark">
@@ -55,38 +83,16 @@
           </ul>
         </div>
   </nav>
-  <div class="container-fluid" style="padding-top:25px;">
-      <div class="row" style="text-align: center;">
-        <?php
-          $query = "SELECT * FROM products WHERE status = 'active' AND category = 'mask'";
-          $result = mysqli_query($conn,$query);
-          if(!$result){
-            die("Error Getting Category...");
-          }else{
-            while($row = mysqli_fetch_assoc($result)){
-              $name = $row['name'];
-              $id = $row['id'];
-              $price_range = $row['price'];
-              $image = $row['image'];
-              $pid = $row['productid'];
-              $qt = $row['quantity'];
-              echo '<input type="hidden" name="id" value="'.$id.'">';
-              echo '<div class="col-md-3 col-sm-12">';
-              echo '<div class="card" style="width: 18rem;">';
-              echo '<img src="'.$image.'" class="card-img-top" alt="..." style="width: 18rem; height:12rem;">';
-              echo '<div class="card-body">';
-              echo '<h5 class="card-title">'.$name.'</h5>';
-              echo '<p class="card-text" style="text-align:left">
-              ID: '.$pid.'<br>
-              Price: <i class="fas fa-rupee-sign"></i> '.$price_range.'<br>
-              Available: '.$qt.'</p>';
-              echo '<a href="purchase.php?productid='.$id.'" class="btn btn-success">Buy</a>';
-              echo '</div>';
-              echo '</div>';
-              echo '</div>';
-            }
-          }
-        ?>
+  <div class="container">
+      <div class="col-md-6" style="padding: 50px;">
+          <div class="proimg" style="background-image: url('<?php echo $image; ?>');"></div>
+          <p class="productdetails" style="margin-top: 10px;">Name: <?php echo $name; ?></p>
+          <p class="productdetails">ID: <?php echo $productid; ?></p>
+          <p class="productdetails">Price: <i class="fas fa-rupee-sign"></i><?php echo $price; ?></p>
       </div>
+      <div class="col-md-6">
+            <p>test</p>
+      </div>
+  </div>
 </body>
 </html>
