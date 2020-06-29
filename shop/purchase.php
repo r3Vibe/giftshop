@@ -16,6 +16,7 @@ if(isset($_GET['productid'])){
     while($row = mysqli_fetch_assoc($result)){
         $image = $row['image'];
         $name = $row['name'];
+        $category = $row['category'];
         $productid = $row['productid'];
         $price = $row['price'];
     }
@@ -23,13 +24,13 @@ if(isset($_GET['productid'])){
 ?>
 <?php
 $user = $_SESSION['user'];
-$query = "SELECT * FROM users WHERE name = '{$user}'";
+$query = "SELECT * FROM users WHERE uname = '{$user}'";
 $result = mysqli_query($conn,$query);
 if(!$result){
     die("error");
 }
 while($row = mysqli_fetch_assoc($result)){
-    $name = $row['fname'];
+    $cname = $row['fname'];
     $address = $row['address'];
     $contact = $row['contact'];
 }
@@ -83,16 +84,33 @@ while($row = mysqli_fetch_assoc($result)){
           </ul>
         </div>
   </nav>
-  <div class="container">
-      <div class="col-md-6" style="padding: 50px;">
-          <div class="proimg" style="background-image: url('<?php echo $image; ?>');"></div>
-          <p class="productdetails" style="margin-top: 10px;">Name: <?php echo $name; ?></p>
-          <p class="productdetails">ID: <?php echo $productid; ?></p>
-          <p class="productdetails">Price: <i class="fas fa-rupee-sign"></i><?php echo $price; ?></p>
+  <div class="mycontainer">
+    <div class="myrow">
+      <div class="mycol">
+        <h1>Product Details</h1>
+        <div class="proimg" style="background-image: url(<?php echo $image; ?>);"></div>
+        <p class="details" style="margin-top: 15px;">Product: <?php echo $name; ?></p>
+        <p class="details">Category: <?php echo $category; ?></p>
+        <p class="details">ID: <?php echo $productid; ?></p>
+        <p class="details">Price: <i class="fas fa-rupee-sign"></i><?php echo $price; ?></p>
+        <p class="details"><input type="number" name="qt" id="qt" placeholder="Enter Required Quantity"></p>
       </div>
-      <div class="col-md-6">
-            <p>test</p>
+      <div class="mycol">
+        <h1>Existing Address</h1>
+        <p class="details">Customer: <?php echo $cname ; ?></p>
+        <p class="details">Contact: <?php echo $contact ; ?></p>
+        <p class="details">Address: <?php echo $address ; ?></p>
       </div>
+      <div class="mycol">
+        <h1>Custom Address</h1>
+        <p class="details">Customer: <?php echo $cname ; ?></p>
+        <p class="details"><input type="tel" name="newno" id="newno" placeholder="Enter New Number"></p>
+        <p class="details"><textarea name="newaddress" id="newaddress" cols="30" rows="10" placeholder="Enter Delivery Address"></textarea></p>
+      </div>
+    </div>
+    <div class="myrow">
+      <button class="btn btn-success" id="cnfbtn">Confirm Details</button>
+    </div>
   </div>
 </body>
 </html>
