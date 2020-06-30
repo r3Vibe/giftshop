@@ -151,7 +151,7 @@ if(isset($_GET['location'])){
                     $id = $row['id'];
                     $productid = $row['productid'];
                     $status = $row['status'];
-                    $sell = $row['sell'];
+                    $sell = $row['price'];
                     $quantity = $row['quantity'];
                     echo '<tr>';
                     echo '<th scope="row"><input type="radio" name="id" id="id" value="'.$id.'"></th>';
@@ -173,10 +173,9 @@ if(isset($_GET['location'])){
     <div class="wrapperforitems categoryc" style="display: none;">
       <h1 style="padding-top: 15px;">Categories</h1>
       <p class="btn-holder">
-        <button class="btn btn-success">Add</button>
-        <button class="btn btn-success">Remove</button>
-        <button class="btn btn-success">Status</button>
-        <button class="btn btn-success">Update</button>
+        <button class="btn btn-success" id="addcat" style="margin-left: 70%;">Add</button>
+        <button class="btn btn-success" id="remcat">Remove</button>
+        <button class="btn btn-success" id="upcat">Update</button>
       </p>
       <p class="table-holder">
           <table class="table table-striped table-bordered">
@@ -200,22 +199,21 @@ if(isset($_GET['location'])){
                   while($row= mysqli_fetch_assoc($result)){
                     $name = $row['name'];
                     $id = $row['id'];
-                    $variationnumber = $row['variationnumber'];
+                    $variationnumber = $row['number'];
                     $variations = $row['variations'];
-                    $pricerange = $row['pricerange'];
+                    $pricerange = $row['prange'];
                     $image = $row['image'];
                     echo '<tr>';
-                    echo '<th scope="row"><input type="radio" name="id" id="id" value="'.$id.'"></th>';
+                    echo '<th scope="row"><input type="radio" name="cid" id="id" value="'.$id.'"></th>';
                     echo '<th><img src="'.$image.'" alt="" srcset="" style="width:40px;height:40px;"></th>';
                     echo '<th>'.$name.'</th>';
-                    echo '<th>'.$pricerange.'</th>';
+                    echo '<th><i class="fas fa-rupee-sign"></i> '.$pricerange.'</th>';
                     echo '<th>'.$variationnumber.'</th>';
-                    echo '<th><i class="fas fa-rupee-sign"></i> '.$variations.'</th>';
+                    echo '<th>'.$variations.'</th>';
                     echo '</tr>';
                   }
                 }
               ?>
-              
             </tbody>
           </table>
       </p>
@@ -245,6 +243,10 @@ if(isset($_GET['location'])){
         $(".allmsg").html("You Need To Select A Product First!");
         $(".allmsgbg").fadeIn("fast");
         $(".allmsg").fadeIn("slow");
+        setTimeout(function(){
+          $(".allmsgbg").fadeOut("fast");
+          $(".allmsg").fadeOut("slow");
+        },1800);
       }else{
         var quantity = prompt("Update Quantity:");
         $.post("../validate/proqt.php",{"id":id,"qt":quantity},function(res){
@@ -266,6 +268,10 @@ if(isset($_GET['location'])){
         $(".allmsg").html("You Need To Select A Product First!");
         $(".allmsgbg").fadeIn("fast");
         $(".allmsg").fadeIn("slow");
+        setTimeout(function(){
+          $(".allmsgbg").fadeOut("fast");
+          $(".allmsg").fadeOut("slow");
+        },1800);
       }else{
         $.post("../validate/prostatus.php",{"id":id},function(res){
           $(".allmsg").html(res);
@@ -287,6 +293,10 @@ if(isset($_GET['location'])){
         $(".allmsg").html("You Need To Select A Product First!");
         $(".allmsgbg").fadeIn("fast");
         $(".allmsg").fadeIn("slow");
+        setTimeout(function(){
+          $(".allmsgbg").fadeOut("fast");
+          $(".allmsg").fadeOut("slow");
+        },1800);
       }else{
         $.post("../validate/prorem.php",{"id":id},function(res){
           $(".allmsg").html(res);
@@ -349,6 +359,37 @@ if(isset($_GET['location'])){
       $(".orderc").hide();                 
       $(".msgc").fadeIn("fast"); 
     }
+
+    //category div
+    $("#addcat").click(function(){
+      location.href = "addcat.php";
+    });
+//remove
+    $("#remcat").click(function(){
+      var id = $("input[name='cid']:checked").val();
+      if(typeof(id) == "undefined"){
+        $(".allmsg").html("You Need To Select A Category First!");
+        $(".allmsgbg").fadeIn("fast");
+        $(".allmsg").fadeIn("slow");
+        setTimeout(function(){
+          $(".allmsgbg").fadeOut("fast");
+          $(".allmsg").fadeOut("slow");
+        },1800);
+      }
+    });
+    //update
+    $("#upcat").click(function(){
+      var id = $("input[name='cid']:checked").val();
+      if(typeof(id) == "undefined"){
+        $(".allmsg").html("You Need To Select A Category First!");
+        $(".allmsgbg").fadeIn("fast");
+        $(".allmsg").fadeIn("slow");
+        setTimeout(function(){
+          $(".allmsgbg").fadeOut("fast");
+          $(".allmsg").fadeOut("slow");
+        },1800);
+      }
+    });
   </script>
 </body>
 </html>

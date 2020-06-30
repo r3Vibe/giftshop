@@ -74,7 +74,7 @@
       <div class="row">
           <div class="col-md-4">
               <form action="some.php" method="post" id="imgfrm">
-                <h1>Upload Image</h1>
+                <h2>Upload Image</h2>
                 <div class="image"></div>
                 <input type="file" name="imgae" id="imgae" class="form-control-file">
                 <button class="btn btn-success" style="width: 75%;" id="upload">Upload</button>
@@ -82,7 +82,7 @@
           </div>
           <div class="col-md-4">
               <form action="some.php" method="post" id="gend">
-                <h1>General Details</h1>
+                <h2>General Details</h2>
                 <input type="hidden" name="image" value="" id="hidimg">
                 <input type="text" name="name" id="name" placeholder="Enter Product Name">
                 <input type="text" name="pid" id="pid" placeholder="Enter Product ID">
@@ -101,7 +101,7 @@
           </div>
           <div class="col-md-4">
               <form action="some.php" method="post" id="accd">
-                <h1>Accounting Details</h1>
+                <h2>Accounting Details</h2>
                 <input type="number" name="price" id="price" placeholder="Enter Product Price">
                 <input type="number" name="qt" id="qt" placeholder="Enter Quantity Available">
               </form>
@@ -170,12 +170,21 @@
             cache:false,
             contentType:false,
             success: function(res){
-                $(".allmsg").html("New Product Added");
+              if(res ==  "Error"){
+                $(".allmsg").html("We have an Error. Try Again Later Or Contact Your Developer");
                 $(".allmsgbg").fadeIn("fast");
                 $(".allmsg").fadeIn("fast");
                 setTimeout(function(){
                     location.href = "index.php?location=product";
                 }, 1000);
+              }else{
+                $(".allmsg").html(res);
+                $(".allmsgbg").fadeIn("fast");
+                $(".allmsg").fadeIn("fast");
+                setTimeout(function(){
+                    location.href = "index.php?location=product";
+                }, 1000);
+              }
             }
         });
       })
