@@ -416,7 +416,7 @@ if(isset($_GET['location'])){
                 $(".allmsg").html(res);
                 $(".allmsgbg").fadeIn("fast");
                 $(".allmsg").fadeIn("slow");
-                if(res == "Category Removed"){
+                if(res == "New Variation Added"){
                   setTimeout(function(){
                       location.href = "index.php?cat=true";
                   }, 1000);
@@ -431,13 +431,21 @@ if(isset($_GET['location'])){
                 $(".allmsg").html(res);
                 $(".allmsgbg").fadeIn("fast");
                 $(".allmsg").fadeIn("slow");
-                if(res == "Category Removed"){
+                if(res == "Price Range Updated"){
                   setTimeout(function(){
                       location.href = "index.php?cat=true";
                   }, 1000);
                 }
               });
             });
+          }else{
+            $(".allmsg").html("Choose An option First");
+            $(".allmsgbg").fadeIn("fast");
+            $(".allmsg").fadeIn("slow");
+            setTimeout(function(){
+              $(".allmsgbg").fadeOut("fast");
+              $(".allmsg").fadeOut("slow");
+            },1800);
           }
         });
       }
