@@ -23,7 +23,7 @@
   <script src="../jq/jq.js"></script>
   <script src="../jq/bootstrap.js"></script>
   <script src="../jq/style.js"></script>
-  <title>Admin Panel</title>
+  <title>Add Product</title>
 </head>
 <body>
   <div class="allmsgbg"></div>
