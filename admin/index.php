@@ -23,6 +23,9 @@ if(isset($_GET['qtup'])){
 if(isset($_GET['stsc'])){
   $show = 1;
 }
+if(isset($_GET['cat'])){
+  $show = 3;
+}
 if(isset($_GET['location'])){
   $to = $_GET['location'];
   if($to == "home"){
@@ -364,7 +367,7 @@ if(isset($_GET['location'])){
     $("#addcat").click(function(){
       location.href = "addcat.php";
     });
-//remove
+    //remove
     $("#remcat").click(function(){
       var id = $("input[name='cid']:checked").val();
       if(typeof(id) == "undefined"){
@@ -375,6 +378,17 @@ if(isset($_GET['location'])){
           $(".allmsgbg").fadeOut("fast");
           $(".allmsg").fadeOut("slow");
         },1800);
+      }else{
+        $.post("../validate/catrem.php",{"id":id},function(res){
+          $(".allmsg").html(res);
+          $(".allmsgbg").fadeIn("fast");
+          $(".allmsg").fadeIn("slow");
+          if(res == "Category Removed"){
+            setTimeout(function(){
+                location.href = "index.php?cat=true";
+            }, 1000);
+          }
+        });
       }
     });
     //update
@@ -388,6 +402,44 @@ if(isset($_GET['location'])){
           $(".allmsgbg").fadeOut("fast");
           $(".allmsg").fadeOut("slow");
         },1800);
+      }else{
+        $(".allmsg").html('<h1 style="margin-bottom:5px !important;">Update Category</h1><select name="whichone" id="whichone"><option value="" selected disabled>Choose Option</option><option value="range">Price Range</option><option value="nos">Increase Variations</option></select><button class="btn btn-success" id="catupsub">Submit</button>');
+        $(".allmsgbg").fadeIn("fast");
+        $(".allmsg").fadeIn("slow");
+        $("#catupsub").click(function(){
+          var whichone = $("#whichone").val();
+          if(whichone == 'nos'){
+            $(".allmsg").html('<input type="text" name="newvar" id="newvar" style="width:100%;border:none;outline:none;background:none;border-bottom:2px solid black;" placeholder="Enter New Variation Name"><button class="btn btn-success" id="newvarup">Submit</button>');
+            $("#newvarup").click(function(){
+              var newvariation = $("#newvar").val(); 
+              $.post("../validate/upcat.php",{"id":id,"which":"newvar","newvarval":newvariation},function(res){
+                $(".allmsg").html(res);
+                $(".allmsgbg").fadeIn("fast");
+                $(".allmsg").fadeIn("slow");
+                if(res == "Category Removed"){
+                  setTimeout(function(){
+                      location.href = "index.php?cat=true";
+                  }, 1000);
+                }
+              });
+            });
+          }else if(whichone == 'range'){
+            $(".allmsg").html('<input type="text" name="rangevar" id="rangevar" style="width:100%;border:none;outline:none;background:none;border-bottom:2px solid black;" placeholder="Enter New Price Range"><button class="btn btn-success" id="rangeup">Submit</button>');
+            $("#rangeup").click(function(){
+              var rangeval = $("#rangevar").val(); 
+              $.post("../validate/upcat.php",{"id":id,"which":"range","rangeval":rangeval},function(res){
+                $(".allmsg").html(res);
+                $(".allmsgbg").fadeIn("fast");
+                $(".allmsg").fadeIn("slow");
+                if(res == "Category Removed"){
+                  setTimeout(function(){
+                      location.href = "index.php?cat=true";
+                  }, 1000);
+                }
+              });
+            });
+          }
+        });
       }
     });
   </script>
