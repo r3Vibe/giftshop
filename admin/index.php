@@ -98,11 +98,22 @@ if(isset($_GET['location'])){
       <button class="btn btn-success" id="product">Products</button>
       <button class="btn btn-success" id="category">Categories</button>
       <button class="btn btn-success" id="order">Orders</button>
+      <button class="btn btn-success" id="chat">Chat</button>
       <button class="btn btn-success" id="msg">Messages</button>
   </div>
   <div class="content">
     <div class="wrapperforitems homec">
       <h1 style="padding-top: 15px;">Admin Panel</h1>
+      <h2 style="padding-top: 15px; text-transform:Capitalize;">
+        <?php
+          $query = "SELECT * FROM users WHERE uname = '{$_SESSION["user"]}'";
+          $result = mysqli_query($conn,$query);
+          while($row= mysqli_fetch_assoc($result)){
+            $fname = $row['fname'];
+          }
+          echo "Welcome $fname";
+        ?>
+      </h2>
       <p>
         <ul>
           <?php

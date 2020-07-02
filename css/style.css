@@ -152,6 +152,9 @@ body{
 .wrapperforitems h1{
     text-align: center;
 }
+.wrapperforitems h2{
+    text-align: center;
+}
 
 .btn-holder button{
     width: 100px;
