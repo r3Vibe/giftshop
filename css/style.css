@@ -264,7 +264,7 @@ body{
 
 .mycontainer .myrow{
     width: 100%;
-    height: auto;
+    height: 100%;
     display: flex;
     align-items: start;
     justify-content: center;

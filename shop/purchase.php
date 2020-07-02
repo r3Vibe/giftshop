@@ -92,25 +92,80 @@ while($row = mysqli_fetch_assoc($result)){
         <p class="details" style="margin-top: 15px;">Product: <?php echo $name; ?></p>
         <p class="details">Category: <?php echo $category; ?></p>
         <p class="details">ID: <?php echo $productid; ?></p>
-        <p class="details">Price: <i class="fas fa-rupee-sign"></i><?php echo $price; ?></p>
+      </div>
+      <div class="mycol">
+        <h1>Pricing Details</h1>
         <p class="details"><input type="number" name="qt" id="qt" placeholder="Enter Required Quantity"></p>
+        <p class="details">Price: <i class="fas fa-rupee-sign"></i><?php echo $price; ?></p>
+        <p class="details">Total: <span class="total"><i class="fas fa-rupee-sign"></i>0</span></p>
       </div>
       <div class="mycol">
         <h1>Existing Address</h1>
+        <p class="details">
+          <label for="deladdr" style="margin-right: 5px;" >Use Existing</label>
+          <span><input type="radio" name="deladdr" id="deladdr" style="width: auto;" value="exists"></span>
+        </p>
         <p class="details">Customer: <?php echo $cname ; ?></p>
         <p class="details">Contact: <?php echo $contact ; ?></p>
         <p class="details">Address: <?php echo $address ; ?></p>
       </div>
       <div class="mycol">
-        <h1>Custom Address</h1>
+        <h1>New Address</h1>
+        <p class="details">
+          <label for="deladdr" style="margin-right: 5px;" >Use New</label>
+          <span><input type="radio" name="deladdr" id="deladdr" style="width: auto;" value="new"></span>
+        </p>
         <p class="details">Customer: <?php echo $cname ; ?></p>
-        <p class="details"><input type="tel" name="newno" id="newno" placeholder="Enter New Number"></p>
-        <p class="details"><textarea name="newaddress" id="newaddress" cols="30" rows="10" placeholder="Enter Delivery Address"></textarea></p>
+        <p class="details"><input type="tel" name="newno" id="newno" placeholder="Enter Contact Number" disabled></p>
+        <p class="details"><textarea name="newaddress" id="newaddress" cols="30" rows="10" disabled placeholder="Enter Delivery Address"></textarea></p>
       </div>
     </div>
     <div class="myrow">
       <button class="btn btn-success" id="cnfbtn">Confirm Details</button>
     </div>
   </div>
+  <script>
+    $("#qt").keyup(function(){
+      var qt = $("#qt").val();
+      var price = '<?php echo $price; ?>';
+      var subtotal = qt * price;
+      $(".total").html('<i class="fas fa-rupee-sign"></i>'+subtotal);
+    });
+    $(document).ready(function(){
+      $("input[type='radio']").click(function(){
+        var values = $("input[type='radio']:checked").val();
+        if(values == "new"){
+          $("#newno").removeAttr("disabled");
+          $("#newaddress").removeAttr("disabled");
+        }else if(values == "exists"){
+          $("#newno").attr("disabled","true");
+          $("#newaddress").attr("disabled","true");
+        }
+      });
+    });
+    $("#cnfbtn").click(function(){
+      var product = '<?php echo $name;?>';
+      var productid = '<?php echo $productid;?>';
+      var price = '<?php echo $price;?>';
+      var qt = $("#qt").val();
+      var subtotal = qt * price;
+      if(qt == ""){
+        $("#qt").css("border-bottom","2px solid red");
+        alert("Please Enter Required Quantity");
+      }else{
+        $("#qt").css("border-bottom","2px solid black");
+        var values = $("input[type='radio']:checked").val();
+        if(values == "new"){
+          var customer = '<?php echo $cname;?>';
+          var contact = $("#newno").val();
+          var address = $("#newaddress").val();
+        }else if(values == "exists"){
+          var customer = '<?php echo $cname;?>';
+          var contact = '<?php echo $contact;?>';
+          var address = '<?php echo $address;?>';
+        }
+      }
+    });
+  </script>
 </body>
 </html>

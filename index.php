@@ -17,7 +17,7 @@
     <script src="jq/jq.js"></script>
     <script src="jq/bootstrap.js"></script>
     <script src="jq/style.js"></script>
-    <title>Rever Designs</title>
+    <title>Rever Design</title>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg dark">
