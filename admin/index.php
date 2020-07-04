@@ -234,10 +234,63 @@ if(isset($_GET['location'])){
     </div>
     <div class="wrapperforitems orderc" style="display: none;">
       <h1 style="padding-top: 15px;">Orders</h1>
-      <p>
-        <ul>
-          <li>New Product Order</li>
-        </ul>
+      <p class="btn-holder">
+        <button class="btn btn-success" id="addproduct">Add</button>
+        <button class="btn btn-success" id="remproduct">Remove</button>
+        <button class="btn btn-success" id="changeproduct">Status</button>
+        <button class="btn btn-success" id="updateproduct">Quantity</button>
+      </p>
+      <p class="table-holder">
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Order ID</th>
+                <th scope="col">Product</th>
+                <th scope="col">Status</th>
+                <th scope="col">Work In Progress</th>
+                <th scope="col">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php
+                $usser = $_SESSION["user"];
+                $query = "SELECT * FROM users WHERE uname = '{$usser}'";
+                $result = mysqli_query($conn,$query);
+                if(!$result){
+                  die("error");
+                }else{
+                  while($row = mysqli_fetch_assoc($result)){
+                    $cont = $row['contact'];
+                  }
+                }
+                $query = "SELECT * FROM orderlistt WHERE contact = '{$cont}' AND status = 'processing'";
+                $result = mysqli_query($conn,$query);
+                if(!$result){
+                  die("error");
+                }else{
+                  while($row= mysqli_fetch_assoc($result)){
+                    $order_id = $row['order_id'];
+                    $product = $row['product'];
+                    $id = $row['id'];
+                    $status = $row['status'];
+                    $date = $row['date'];
+                    echo '<tr>';
+                    echo '<th scope="row"><input type="radio" name="id" id="id" value="'.$id.'"></th>';
+                    echo '<th>'.$order_id.'</th>';
+                    echo '<th>'.$product.'</th>';
+                    echo '<th>'.$status.'</th>';
+                    if($status == "processing"){
+                      echo '<th>Order Received</th>';
+                    }
+                    echo '<th>'.$date.'</th>';
+                    echo '</tr>';
+                  }
+                }
+              ?>
+              
+            </tbody>
+          </table>
       </p>
     </div>
     <div class="wrapperforitems msgc" style="display: none;">

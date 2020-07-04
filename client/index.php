@@ -104,9 +104,121 @@
     </div>
     <div class="wrapperforitems orderlistc" style="display: none;">
       <h1 style="padding-top: 15px;">Order List</h1>
+      <p class="table-holder">
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Order ID</th>
+                <th scope="col">Product</th>
+                <th scope="col">ID</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Subtotal</th>
+                <th scope="col">Status</th>
+                <th scope="col">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php
+                $usser = $_SESSION["user"];
+                $query = "SELECT * FROM users WHERE uname = '{$usser}'";
+                $result = mysqli_query($conn,$query);
+                if(!$result){
+                  die("error");
+                }else{
+                  while($row = mysqli_fetch_assoc($result)){
+                    $cont = $row['contact'];
+                  }
+                }
+                $query = "SELECT * FROM orderlistt WHERE contact = '{$cont}'";
+                $result = mysqli_query($conn,$query);
+                if(!$result){
+                  die("error");
+                }else{
+                  while($row= mysqli_fetch_assoc($result)){
+                    $order_id = $row['order_id'];
+                    $product = $row['product'];
+                    $productid = $row['product_id'];
+                    $id = $row['id'];
+                    $price = $row['price'];
+                    $quantity = $row['quantity'];
+                    $subtotal = $row['subtotal'];
+                    $status = $row['status'];
+                    $date = $row['date'];
+                    echo '<tr>';
+                    echo '<th scope="row"><input type="radio" name="id" id="id" value="'.$id.'"></th>';
+                    echo '<th>'.$order_id.'</th>';
+                    echo '<th>'.$product.'</th>';
+                    echo '<th>'.$productid.'</th>';
+                    echo '<th><i class="fas fa-rupee-sign"></i> '.$price.'</th>';
+                    echo '<th>'.$quantity.'</th>';
+                    echo '<th><i class="fas fa-rupee-sign"></i> '.$subtotal.'</th>';
+                    echo '<th>'.$status.'</th>';
+                    echo '<th>'.$date.'</th>';
+                    echo '</tr>';
+                  }
+                }
+              ?>
+              
+            </tbody>
+          </table>
+      </p>
     </div>
     <div class="wrapperforitems trackc" style="display: none;">
       <h1 style="padding-top: 15px;">Track Order</h1>
+      <p class="table-holder">
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Order ID</th>
+                <th scope="col">Product</th>
+                <th scope="col">Status</th>
+                <th scope="col">Work In Progress</th>
+                <th scope="col">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php
+                $usser = $_SESSION["user"];
+                $query = "SELECT * FROM users WHERE uname = '{$usser}'";
+                $result = mysqli_query($conn,$query);
+                if(!$result){
+                  die("error");
+                }else{
+                  while($row = mysqli_fetch_assoc($result)){
+                    $cont = $row['contact'];
+                  }
+                }
+                $query = "SELECT * FROM orderlistt WHERE contact = '{$cont}' AND status = 'processing'";
+                $result = mysqli_query($conn,$query);
+                if(!$result){
+                  die("error");
+                }else{
+                  while($row= mysqli_fetch_assoc($result)){
+                    $order_id = $row['order_id'];
+                    $product = $row['product'];
+                    $id = $row['id'];
+                    $status = $row['status'];
+                    $date = $row['date'];
+                    echo '<tr>';
+                    echo '<th scope="row"><input type="radio" name="id" id="id" value="'.$id.'"></th>';
+                    echo '<th>'.$order_id.'</th>';
+                    echo '<th>'.$product.'</th>';
+                    echo '<th>'.$status.'</th>';
+                    if($status == "processing"){
+                      echo '<th>Order Received</th>';
+                    }
+                    echo '<th>'.$date.'</th>';
+                    echo '</tr>';
+                  }
+                }
+              ?>
+              
+            </tbody>
+          </table>
+      </p>
     </div>
     <div class="wrapperforitems chatc" style="display: none;">
       <h1 style="padding-top: 15px;">Chat</h1>
