@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 4.9.5deb2
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jun 28, 2020 at 08:24 AM
--- Server version: 10.4.13-MariaDB
--- PHP Version: 7.2.31
+-- Host: localhost:3306
+-- Generation Time: Jul 06, 2020 at 09:17 PM
+-- Server version: 10.3.20-MariaDB-1
+-- PHP Version: 7.3.15-3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -48,6 +49,37 @@ INSERT INTO `category` (`id`, `name`, `number`, `variations`, `prange`, `image`,
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `orderlistt`
+--
+
+CREATE TABLE `orderlistt` (
+  `order_id` varchar(255) NOT NULL,
+  `id` int(100) NOT NULL,
+  `product` varchar(255) NOT NULL,
+  `product_id` varchar(255) NOT NULL,
+  `price` varchar(255) NOT NULL,
+  `quantity` varchar(255) NOT NULL,
+  `subtotal` varchar(255) NOT NULL,
+  `customer` varchar(255) NOT NULL,
+  `contact` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `status` varchar(255) NOT NULL,
+  `date` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `orderlistt`
+--
+
+INSERT INTO `orderlistt` (`order_id`, `id`, `product`, `product_id`, `price`, `quantity`, `subtotal`, `customer`, `contact`, `email`, `address`, `status`, `date`) VALUES
+('rd-01', 1, 'vivid one', 'rd-vivid-mask-01', '150', '2', '300', 'arnab gupta', '555', 'test2@mail.com', 'barasat', 'delivered', '04-Jul-2020'),
+('rd-01', 2, 'vivid one', 'rd-vivid-mask-01', '150', '2', '300', 'arnab gupta', '555', 'test2@mail.com', 'barasat', 'processing', '04-Jul-2020'),
+('rd-03', 3, 'vivid one', 'rd-vivid-mask-01', '150', '2', '300', 'arnab gupta', '555', 'test2@mail.com', 'barasat', 'delivered', '04-Jul-2020');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `products`
 --
 
@@ -82,6 +114,7 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `fname` varchar(255) NOT NULL,
   `contact` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
   `address` varchar(255) NOT NULL,
   `role` varchar(255) NOT NULL,
   `image` varchar(255) NOT NULL
@@ -91,9 +124,9 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `uname`, `password`, `fname`, `contact`, `address`, `role`, `image`) VALUES
-(5, 'dovahkiin', '$2y$10$flsSok2I1CxHgNYmn3gQ/.lCajxzpkBMr6dmQchaTNrHA4GGL5BRS', 'arnab gupta', '555', 'barasat', 'admin', ''),
-(6, 'dovahkiin2', '$2y$10$flsSok2I1CxHgNYmn3gQ/.lCajxzpkBMr6dmQchaTNrHA4GGL5BRS', 'arnab gupta', '555', 'barasat', 'customer', '');
+INSERT INTO `users` (`id`, `uname`, `password`, `fname`, `contact`, `email`, `address`, `role`, `image`) VALUES
+(5, 'dovahkiin', '$2y$10$flsSok2I1CxHgNYmn3gQ/.lCajxzpkBMr6dmQchaTNrHA4GGL5BRS', 'arnab gupta', '555', 'test@mail.com', 'barasat', 'admin', ''),
+(6, 'dovahkiin2', '$2y$10$flsSok2I1CxHgNYmn3gQ/.lCajxzpkBMr6dmQchaTNrHA4GGL5BRS', 'arnab gupta', '555', 'test2@mail.com', 'barasat', 'customer', '');
 
 -- --------------------------------------------------------
 
@@ -125,6 +158,12 @@ ALTER TABLE `category`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `orderlistt`
+--
+ALTER TABLE `orderlistt`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `products`
 --
 ALTER TABLE `products`
@@ -151,6 +190,12 @@ ALTER TABLE `user_role`
 --
 ALTER TABLE `category`
   MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `orderlistt`
+--
+ALTER TABLE `orderlistt`
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `products`
