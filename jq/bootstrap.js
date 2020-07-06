@@ -1219,7 +1219,7 @@
   };
   var EVENT_SHOW = "show" + EVENT_KEY$3;
   var EVENT_SHOWN = "shown" + EVENT_KEY$3;
-  var EVENT_HIDE = "hide" + EVENT_KEY$3;
+  var EVENT_fadeOut = "fadeOut" + EVENT_KEY$3;
   var EVENT_HIDDEN = "hidden" + EVENT_KEY$3;
   var EVENT_CLICK_DATA_API$3 = "click" + EVENT_KEY$3 + DATA_API_KEY$3;
   var CLASS_NAME_SHOW$1 = 'show';
@@ -1275,7 +1275,7 @@
     // Public
     _proto.toggle = function toggle() {
       if ($(this._element).hasClass(CLASS_NAME_SHOW$1)) {
-        this.hide();
+        this.fadeOut();
       } else {
         this.show();
       }
@@ -1321,7 +1321,7 @@
       }
 
       if (actives) {
-        Collapse._jQueryInterface.call($(actives).not(this._selector), 'hide');
+        Collapse._jQueryInterface.call($(actives).not(this._selector), 'fadeOut');
 
         if (!activesData) {
           $(actives).data(DATA_KEY$3, null);
@@ -1355,14 +1355,14 @@
       this._element.style[dimension] = this._element[scrollSize] + "px";
     };
 
-    _proto.hide = function hide() {
+    _proto.fadeOut = function fadeOut() {
       var _this2 = this;
 
       if (this._isTransitioning || !$(this._element).hasClass(CLASS_NAME_SHOW$1)) {
         return;
       }
 
-      var startEvent = $.Event(EVENT_HIDE);
+      var startEvent = $.Event(EVENT_fadeOut);
       $(this._element).trigger(startEvent);
 
       if (startEvent.isDefaultPrevented()) {
@@ -1475,7 +1475,7 @@
 
         var _config = _objectSpread2(_objectSpread2(_objectSpread2({}, Default$1), $this.data()), typeof config === 'object' && config ? config : {});
 
-        if (!data && _config.toggle && typeof config === 'string' && /show|hide/.test(config)) {
+        if (!data && _config.toggle && typeof config === 'string' && /show|fadeOut/.test(config)) {
           _config.toggle = false;
         }
 
@@ -1571,7 +1571,7 @@
   var RIGHT_MOUSE_BUTTON_WHICH = 3; // MouseEvent.which value for the right button (assuming a right-handed mouse)
 
   var REGEXP_KEYDOWN = new RegExp(ARROW_UP_KEYCODE + "|" + ARROW_DOWN_KEYCODE + "|" + ESCAPE_KEYCODE);
-  var EVENT_HIDE$1 = "hide" + EVENT_KEY$4;
+  var EVENT_fadeOut$1 = "fadeOut" + EVENT_KEY$4;
   var EVENT_HIDDEN$1 = "hidden" + EVENT_KEY$4;
   var EVENT_SHOW$1 = "show" + EVENT_KEY$4;
   var EVENT_SHOWN$1 = "shown" + EVENT_KEY$4;
@@ -1720,7 +1720,7 @@
       $(parent).toggleClass(CLASS_NAME_SHOW$2).trigger($.Event(EVENT_SHOWN$1, relatedTarget));
     };
 
-    _proto.hide = function hide() {
+    _proto.fadeOut = function fadeOut() {
       if (this._element.disabled || $(this._element).hasClass(CLASS_NAME_DISABLED) || !$(this._menu).hasClass(CLASS_NAME_SHOW$2)) {
         return;
       }
@@ -1728,13 +1728,13 @@
       var relatedTarget = {
         relatedTarget: this._element
       };
-      var hideEvent = $.Event(EVENT_HIDE$1, relatedTarget);
+      var fadeOutEvent = $.Event(EVENT_fadeOut$1, relatedTarget);
 
       var parent = Dropdown._getParentFromElement(this._element);
 
-      $(parent).trigger(hideEvent);
+      $(parent).trigger(fadeOutEvent);
 
-      if (hideEvent.isDefaultPrevented()) {
+      if (fadeOutEvent.isDefaultPrevented()) {
         return;
       }
 
@@ -1913,10 +1913,10 @@
           continue;
         }
 
-        var hideEvent = $.Event(EVENT_HIDE$1, relatedTarget);
-        $(parent).trigger(hideEvent);
+        var fadeOutEvent = $.Event(EVENT_fadeOut$1, relatedTarget);
+        $(parent).trigger(fadeOutEvent);
 
-        if (hideEvent.isDefaultPrevented()) {
+        if (fadeOutEvent.isDefaultPrevented()) {
           continue;
         } // If this is a touch-enabled device we remove the extra
         // empty mouseover listeners we added for iOS support
@@ -2086,8 +2086,8 @@
     focus: 'boolean',
     show: 'boolean'
   };
-  var EVENT_HIDE$2 = "hide" + EVENT_KEY$5;
-  var EVENT_HIDE_PREVENTED = "hidePrevented" + EVENT_KEY$5;
+  var EVENT_fadeOut$2 = "fadeOut" + EVENT_KEY$5;
+  var EVENT_fadeOut_PREVENTED = "fadeOutPrevented" + EVENT_KEY$5;
   var EVENT_HIDDEN$2 = "hidden" + EVENT_KEY$5;
   var EVENT_SHOW$2 = "show" + EVENT_KEY$5;
   var EVENT_SHOWN$2 = "shown" + EVENT_KEY$5;
@@ -2135,7 +2135,7 @@
 
     // Public
     _proto.toggle = function toggle(relatedTarget) {
-      return this._isShown ? this.hide() : this.show(relatedTarget);
+      return this._isShown ? this.fadeOut() : this.show(relatedTarget);
     };
 
     _proto.show = function show(relatedTarget) {
@@ -2171,7 +2171,7 @@
       this._setResizeEvent();
 
       $(this._element).on(EVENT_CLICK_DISMISS, SELECTOR_DATA_DISMISS, function (event) {
-        return _this.hide(event);
+        return _this.fadeOut(event);
       });
       $(this._dialog).on(EVENT_MOUSEDOWN_DISMISS, function () {
         $(_this._element).one(EVENT_MOUSEUP_DISMISS, function (event) {
@@ -2186,7 +2186,7 @@
       });
     };
 
-    _proto.hide = function hide(event) {
+    _proto.fadeOut = function fadeOut(event) {
       var _this2 = this;
 
       if (event) {
@@ -2197,10 +2197,10 @@
         return;
       }
 
-      var hideEvent = $.Event(EVENT_HIDE$2);
-      $(this._element).trigger(hideEvent);
+      var fadeOutEvent = $.Event(EVENT_fadeOut$2);
+      $(this._element).trigger(fadeOutEvent);
 
-      if (!this._isShown || hideEvent.isDefaultPrevented()) {
+      if (!this._isShown || fadeOutEvent.isDefaultPrevented()) {
         return;
       }
 
@@ -2223,10 +2223,10 @@
       if (transition) {
         var transitionDuration = Util.getTransitionDurationFromElement(this._element);
         $(this._element).one(Util.TRANSITION_END, function (event) {
-          return _this2._hideModal(event);
+          return _this2._fadeOutModal(event);
         }).emulateTransitionEnd(transitionDuration);
       } else {
-        this._hideModal();
+        this._fadeOutModal();
       }
     };
 
@@ -2268,10 +2268,10 @@
       var _this3 = this;
 
       if (this._config.backdrop === 'static') {
-        var hideEventPrevented = $.Event(EVENT_HIDE_PREVENTED);
-        $(this._element).trigger(hideEventPrevented);
+        var fadeOutEventPrevented = $.Event(EVENT_fadeOut_PREVENTED);
+        $(this._element).trigger(fadeOutEventPrevented);
 
-        if (hideEventPrevented.defaultPrevented) {
+        if (fadeOutEventPrevented.defaultPrevented) {
           return;
         }
 
@@ -2284,7 +2284,7 @@
 
         this._element.focus();
       } else {
-        this.hide();
+        this.fadeOut();
       }
     };
 
@@ -2361,7 +2361,7 @@
           if (_this6._config.keyboard && event.which === ESCAPE_KEYCODE$1) {
             event.preventDefault();
 
-            _this6.hide();
+            _this6.fadeOut();
           } else if (!_this6._config.keyboard && event.which === ESCAPE_KEYCODE$1) {
             _this6._triggerBackdropTransition();
           }
@@ -2383,7 +2383,7 @@
       }
     };
 
-    _proto._hideModal = function _hideModal() {
+    _proto._fadeOutModal = function _fadeOutModal() {
       var _this8 = this;
 
       this._element.style.display = 'none';
@@ -2839,7 +2839,7 @@
   var HOVER_STATE_SHOW = 'show';
   var HOVER_STATE_OUT = 'out';
   var Event = {
-    HIDE: "hide" + EVENT_KEY$6,
+    fadeOut: "fadeOut" + EVENT_KEY$6,
     HIDDEN: "hidden" + EVENT_KEY$6,
     SHOW: "show" + EVENT_KEY$6,
     SHOWN: "shown" + EVENT_KEY$6,
@@ -2936,7 +2936,7 @@
       clearTimeout(this._timeout);
       $.removeData(this.element, this.constructor.DATA_KEY);
       $(this.element).off(this.constructor.EVENT_KEY);
-      $(this.element).closest('.modal').off('hide.bs.modal', this._hideModalHandler);
+      $(this.element).closest('.modal').off('fadeOut.bs.modal', this._fadeOutModalHandler);
 
       if (this.tip) {
         $(this.tip).remove();
@@ -3033,11 +3033,11 @@
       }
     };
 
-    _proto.hide = function hide(callback) {
+    _proto.fadeOut = function fadeOut(callback) {
       var _this2 = this;
 
       var tip = this.getTipElement();
-      var hideEvent = $.Event(this.constructor.Event.HIDE);
+      var fadeOutEvent = $.Event(this.constructor.Event.fadeOut);
 
       var complete = function complete() {
         if (_this2._hoverState !== HOVER_STATE_SHOW && tip.parentNode) {
@@ -3059,9 +3059,9 @@
         }
       };
 
-      $(this.element).trigger(hideEvent);
+      $(this.element).trigger(fadeOutEvent);
 
-      if (hideEvent.isDefaultPrevented()) {
+      if (fadeOutEvent.isDefaultPrevented()) {
         return;
       }
 
@@ -3230,13 +3230,13 @@
         }
       });
 
-      this._hideModalHandler = function () {
+      this._fadeOutModalHandler = function () {
         if (_this5.element) {
-          _this5.hide();
+          _this5.fadeOut();
         }
       };
 
-      $(this.element).closest('.modal').on('hide.bs.modal', this._hideModalHandler);
+      $(this.element).closest('.modal').on('fadeOut.bs.modal', this._fadeOutModalHandler);
 
       if (this.config.selector) {
         this.config = _objectSpread2(_objectSpread2({}, this.config), {}, {
@@ -3310,16 +3310,16 @@
       clearTimeout(context._timeout);
       context._hoverState = HOVER_STATE_OUT;
 
-      if (!context.config.delay || !context.config.delay.hide) {
-        context.hide();
+      if (!context.config.delay || !context.config.delay.fadeOut) {
+        context.fadeOut();
         return;
       }
 
       context._timeout = setTimeout(function () {
         if (context._hoverState === HOVER_STATE_OUT) {
-          context.hide();
+          context.fadeOut();
         }
-      }, context.config.delay.hide);
+      }, context.config.delay.fadeOut);
     };
 
     _proto._isWithActiveTrigger = function _isWithActiveTrigger() {
@@ -3344,7 +3344,7 @@
       if (typeof config.delay === 'number') {
         config.delay = {
           show: config.delay,
-          hide: config.delay
+          fadeOut: config.delay
         };
       }
 
@@ -3406,7 +3406,7 @@
 
       $(tip).removeClass(CLASS_NAME_FADE$2);
       this.config.animation = false;
-      this.hide();
+      this.fadeOut();
       this.show();
       this.config.animation = initConfigAnimation;
     } // Static
@@ -3418,7 +3418,7 @@
 
         var _config = typeof config === 'object' && config;
 
-        if (!data && /dispose|hide/.test(config)) {
+        if (!data && /dispose|fadeOut/.test(config)) {
           return;
         }
 
@@ -3521,7 +3521,7 @@
   var SELECTOR_TITLE = '.popover-header';
   var SELECTOR_CONTENT = '.popover-body';
   var Event$1 = {
-    HIDE: "hide" + EVENT_KEY$7,
+    fadeOut: "fadeOut" + EVENT_KEY$7,
     HIDDEN: "hidden" + EVENT_KEY$7,
     SHOW: "show" + EVENT_KEY$7,
     SHOWN: "shown" + EVENT_KEY$7,
@@ -3597,7 +3597,7 @@
 
         var _config = typeof config === 'object' ? config : null;
 
-        if (!data && /dispose|hide/.test(config)) {
+        if (!data && /dispose|fadeOut/.test(config)) {
           return;
         }
 
@@ -3975,7 +3975,7 @@
   var EVENT_KEY$9 = "." + DATA_KEY$9;
   var DATA_API_KEY$7 = '.data-api';
   var JQUERY_NO_CONFLICT$9 = $.fn[NAME$9];
-  var EVENT_HIDE$3 = "hide" + EVENT_KEY$9;
+  var EVENT_fadeOut$3 = "fadeOut" + EVENT_KEY$9;
   var EVENT_HIDDEN$3 = "hidden" + EVENT_KEY$9;
   var EVENT_SHOW$3 = "show" + EVENT_KEY$9;
   var EVENT_SHOWN$3 = "shown" + EVENT_KEY$9;
@@ -4025,7 +4025,7 @@
         previous = previous[previous.length - 1];
       }
 
-      var hideEvent = $.Event(EVENT_HIDE$3, {
+      var fadeOutEvent = $.Event(EVENT_fadeOut$3, {
         relatedTarget: this._element
       });
       var showEvent = $.Event(EVENT_SHOW$3, {
@@ -4033,12 +4033,12 @@
       });
 
       if (previous) {
-        $(previous).trigger(hideEvent);
+        $(previous).trigger(fadeOutEvent);
       }
 
       $(this._element).trigger(showEvent);
 
-      if (showEvent.isDefaultPrevented() || hideEvent.isDefaultPrevented()) {
+      if (showEvent.isDefaultPrevented() || fadeOutEvent.isDefaultPrevented()) {
         return;
       }
 
@@ -4201,22 +4201,22 @@
   var EVENT_KEY$a = "." + DATA_KEY$a;
   var JQUERY_NO_CONFLICT$a = $.fn[NAME$a];
   var EVENT_CLICK_DISMISS$1 = "click.dismiss" + EVENT_KEY$a;
-  var EVENT_HIDE$4 = "hide" + EVENT_KEY$a;
+  var EVENT_fadeOut$4 = "fadeOut" + EVENT_KEY$a;
   var EVENT_HIDDEN$4 = "hidden" + EVENT_KEY$a;
   var EVENT_SHOW$4 = "show" + EVENT_KEY$a;
   var EVENT_SHOWN$4 = "shown" + EVENT_KEY$a;
   var CLASS_NAME_FADE$5 = 'fade';
-  var CLASS_NAME_HIDE = 'hide';
+  var CLASS_NAME_fadeOut = 'fadeOut';
   var CLASS_NAME_SHOW$7 = 'show';
   var CLASS_NAME_SHOWING = 'showing';
   var DefaultType$7 = {
     animation: 'boolean',
-    autohide: 'boolean',
+    autofadeOut: 'boolean',
     delay: 'number'
   };
   var Default$7 = {
     animation: true,
-    autohide: true,
+    autofadeOut: true,
     delay: 500
   };
   var SELECTOR_DATA_DISMISS$1 = '[data-dismiss="toast"]';
@@ -4260,14 +4260,14 @@
 
         $(_this._element).trigger(EVENT_SHOWN$4);
 
-        if (_this._config.autohide) {
+        if (_this._config.autofadeOut) {
           _this._timeout = setTimeout(function () {
-            _this.hide();
+            _this.fadeOut();
           }, _this._config.delay);
         }
       };
 
-      this._element.classList.remove(CLASS_NAME_HIDE);
+      this._element.classList.remove(CLASS_NAME_fadeOut);
 
       Util.reflow(this._element);
 
@@ -4281,15 +4281,15 @@
       }
     };
 
-    _proto.hide = function hide() {
+    _proto.fadeOut = function fadeOut() {
       if (!this._element.classList.contains(CLASS_NAME_SHOW$7)) {
         return;
       }
 
-      var hideEvent = $.Event(EVENT_HIDE$4);
-      $(this._element).trigger(hideEvent);
+      var fadeOutEvent = $.Event(EVENT_fadeOut$4);
+      $(this._element).trigger(fadeOutEvent);
 
-      if (hideEvent.isDefaultPrevented()) {
+      if (fadeOutEvent.isDefaultPrevented()) {
         return;
       }
 
@@ -4321,7 +4321,7 @@
       var _this2 = this;
 
       $(this._element).on(EVENT_CLICK_DISMISS$1, SELECTOR_DATA_DISMISS$1, function () {
-        return _this2.hide();
+        return _this2.fadeOut();
       });
     };
 
@@ -4329,7 +4329,7 @@
       var _this3 = this;
 
       var complete = function complete() {
-        _this3._element.classList.add(CLASS_NAME_HIDE);
+        _this3._element.classList.add(CLASS_NAME_fadeOut);
 
         $(_this3._element).trigger(EVENT_HIDDEN$4);
       };

@@ -29,7 +29,7 @@
   <div class="allmsgbg"></div>
   <div class="allmsg">
   </div>
-  <nav class="navbar navbar-expand-lg dark">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="../">Rever Design</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -131,7 +131,7 @@
                     $cont = $row['contact'];
                   }
                 }
-                $query = "SELECT * FROM orderlistt WHERE contact = '{$cont}'";
+                $query = "SELECT * FROM orderlistt WHERE contact = '{$cont}' AND status = 'delivered'";
                 $result = mysqli_query($conn,$query);
                 if(!$result){
                   die("error");
@@ -191,7 +191,7 @@
                     $cont = $row['contact'];
                   }
                 }
-                $query = "SELECT * FROM orderlistt WHERE contact = '{$cont}' AND status = 'processing'";
+                $query = "SELECT * FROM orderlistt WHERE contact = '{$cont}' AND status = 'processing' OR status = 'confirmed' OR status = 'complete' OR status = 'shipped'";
                 $result = mysqli_query($conn,$query);
                 if(!$result){
                   die("error");
@@ -228,44 +228,6 @@
     </div>
   </div>
 <script>
-  $("#home").click(function(){
-    $(".homec").fadeIn("fast");
-    $(".orderlistc").fadeOut("fast");
-    $(".trackc").fadeOut("fast");
-    $(".chatc").fadeOut("fast");
-    $(".suggestc").fadeOut("fast");
-  });
-  $("#shop").click(function(){
-    location.href = "../";
-  });
-  $("#orderlist").click(function(){
-    $(".orderlistc").fadeIn("fast");
-    $(".homec").fadeOut("fast");
-    $(".trackc").fadeOut("fast");
-    $(".chatc").fadeOut("fast");
-    $(".suggestc").fadeOut("fast");
-  });
-  $("#track").click(function(){
-    $(".trackc").fadeIn("fast");
-    $(".homec").fadeOut("fast");
-    $(".orderlistc").fadeOut("fast");
-    $(".chatc").fadeOut("fast");
-    $(".suggestc").fadeOut("fast");
-  });
-  $("#chat").click(function(){
-    $(".chatc").fadeIn("fast");
-    $(".trackc").fadeOut("fast");
-    $(".homec").fadeOut("fast");
-    $(".orderlistc").fadeOut("fast");
-    $(".suggestc").fadeOut("fast");
-  });
-  $("#suggest").click(function(){
-    $(".suggestc").fadeIn("fast");
-    $(".chatc").fadeOut("fast");
-    $(".trackc").fadeOut("fast");
-    $(".homec").fadeOut("fast");
-    $(".orderlistc").fadeOut("fast");
-  });
 </script>
 </body>
 </html>

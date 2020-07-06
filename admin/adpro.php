@@ -28,7 +28,7 @@
 <body>
   <div class="allmsgbg"></div>
   <div class="allmsg"></div>
-  <nav class="navbar navbar-expand-lg dark">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="../">Rever Design</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -68,6 +68,7 @@
       <button class="btn btn-success" id="product">Products</button>
       <button class="btn btn-success" id="category">Categories</button>
       <button class="btn btn-success" id="order">Orders</button>
+      <button class="btn btn-success" id="orderl">Order List</button>
       <button class="btn btn-success" id="msg">Messages</button>
   </div>
   <div class="content" style="padding:25px;" id="form">
@@ -130,6 +131,10 @@
 
       $("#msg").click(function(){
         location.href = "index.php?location=msg";
+      });
+
+      $("#orderl").click(function(){
+        location.href = "index.php?location=list";
       });
 
       $("#upload").click(function(e){

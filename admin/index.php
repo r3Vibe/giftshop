@@ -38,6 +38,8 @@ if(isset($_GET['location'])){
     $show =4;
   }else if($to == "msg"){
     $show =5;
+  }else if($to == "list"){
+    $show = 6;
   }
 }
 ?>
@@ -58,7 +60,7 @@ if(isset($_GET['location'])){
   <div class="allmsgbg"></div>
   <div class="allmsg">
   </div>
-  <nav class="navbar navbar-expand-lg dark">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="../">Rever Design</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -98,6 +100,7 @@ if(isset($_GET['location'])){
       <button class="btn btn-success" id="product">Products</button>
       <button class="btn btn-success" id="category">Categories</button>
       <button class="btn btn-success" id="order">Orders</button>
+      <button class="btn btn-success" id="orderl">Order List</button>
       <button class="btn btn-success" id="chat">Chat</button>
       <button class="btn btn-success" id="msg">Messages</button>
   </div>
@@ -115,19 +118,7 @@ if(isset($_GET['location'])){
         ?>
       </h2>
       <p>
-        <ul>
-          <?php
-            $query = "SELECT * FROM products WHERE status = 'active' AND quantity <= 5";
-            $result = mysqli_query($conn,$query);
-            if(!$result){
-              die();
-            }else{
-              while($row = mysqli_fetch_assoc($result)){
-                $name = $row['name'];
-                echo '<li class="redmsg">'.$name.' is low On Stock</li>';
-              }
-            }
-          ?>
+        <ul id="info">
         </ul>
       </p>
     </div>
@@ -235,10 +226,10 @@ if(isset($_GET['location'])){
     <div class="wrapperforitems orderc" style="display: none;">
       <h1 style="padding-top: 15px;">Orders</h1>
       <p class="btn-holder">
-        <button class="btn btn-success" id="addproduct">Add</button>
-        <button class="btn btn-success" id="remproduct">Remove</button>
-        <button class="btn btn-success" id="changeproduct">Status</button>
-        <button class="btn btn-success" id="updateproduct">Quantity</button>
+        <button class="btn btn-success" id="confrm">Confirm</button>
+        <button class="btn btn-success" id="cmplt">Complete</button>
+        <button class="btn btn-success" id="ship">Ship</button>
+        <button class="btn btn-success" id="delivered">Delivered</button>
       </p>
       <p class="table-holder">
           <table class="table table-striped table-bordered">
@@ -247,24 +238,16 @@ if(isset($_GET['location'])){
                 <th scope="col">#</th>
                 <th scope="col">Order ID</th>
                 <th scope="col">Product</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Total</th>
                 <th scope="col">Status</th>
-                <th scope="col">Work In Progress</th>
                 <th scope="col">Date</th>
               </tr>
             </thead>
             <tbody>
               <?php
-                $usser = $_SESSION["user"];
-                $query = "SELECT * FROM users WHERE uname = '{$usser}'";
-                $result = mysqli_query($conn,$query);
-                if(!$result){
-                  die("error");
-                }else{
-                  while($row = mysqli_fetch_assoc($result)){
-                    $cont = $row['contact'];
-                  }
-                }
-                $query = "SELECT * FROM orderlistt WHERE contact = '{$cont}' AND status = 'processing'";
+                $query = "SELECT * FROM orderlistt WHERE status = 'processing' OR status = 'confirmed' OR status = 'complete' OR status = 'shipped'";
                 $result = mysqli_query($conn,$query);
                 if(!$result){
                   die("error");
@@ -272,17 +255,70 @@ if(isset($_GET['location'])){
                   while($row= mysqli_fetch_assoc($result)){
                     $order_id = $row['order_id'];
                     $product = $row['product'];
+                    $price = $row['price'];
+                    $quantity = $row['quantity'];
                     $id = $row['id'];
                     $status = $row['status'];
+                    $total = $row['subtotal'];
                     $date = $row['date'];
                     echo '<tr>';
                     echo '<th scope="row"><input type="radio" name="id" id="id" value="'.$id.'"></th>';
                     echo '<th>'.$order_id.'</th>';
                     echo '<th>'.$product.'</th>';
+                    echo '<th><i class="fas fa-rupee-sign"></i> '.$price.'</th>';
+                    echo '<th>'.$quantity.'</th>';
+                    echo '<th><i class="fas fa-rupee-sign"></i> '.$total.'</th>';
                     echo '<th>'.$status.'</th>';
-                    if($status == "processing"){
-                      echo '<th>Order Received</th>';
-                    }
+                    echo '<th>'.$date.'</th>';
+                    echo '</tr>';
+                  }
+                }
+              ?>
+              
+            </tbody>
+          </table>
+      </p>
+    </div>
+    <div class="wrapperforitems orderlc" style="display: none;">
+      <h1 style="padding-top: 15px;">Order List</h1>
+      <p class="table-holder">
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Order ID</th>
+                <th scope="col">Product</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Total</th>
+                <th scope="col">Status</th>
+                <th scope="col">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php
+                $query = "SELECT * FROM orderlistt WHERE status = 'delivered'";
+                $result = mysqli_query($conn,$query);
+                if(!$result){
+                  die("error");
+                }else{
+                  while($row= mysqli_fetch_assoc($result)){
+                    $order_id = $row['order_id'];
+                    $product = $row['product'];
+                    $price = $row['price'];
+                    $quantity = $row['quantity'];
+                    $id = $row['id'];
+                    $status = $row['status'];
+                    $total = $row['subtotal'];
+                    $date = $row['date'];
+                    echo '<tr>';
+                    echo '<th scope="row"><input type="radio" name="id" id="id" value="'.$id.'"></th>';
+                    echo '<th>'.$order_id.'</th>';
+                    echo '<th>'.$product.'</th>';
+                    echo '<th><i class="fas fa-rupee-sign"></i> '.$price.'</th>';
+                    echo '<th>'.$quantity.'</th>';
+                    echo '<th><i class="fas fa-rupee-sign"></i> '.$total.'</th>';
+                    echo '<th>'.$status.'</th>';
                     echo '<th>'.$date.'</th>';
                     echo '</tr>';
                   }
@@ -384,47 +420,54 @@ if(isset($_GET['location'])){
 
 
     $(".allmsgbg").on("click",function(){
-      $(".allmsgbg").hide();
-      $(".allmsg").hide();
+      $(".allmsgbg").fadeOut();
+      $(".allmsg").fadeOut();
     });
     $(".close").on("click",function(){
-      $(".allmsgbg").hide();
-      $(".allmsg").hide();
+      $(".allmsgbg").fadeOut();
+      $(".allmsg").fadeOut();
     });
 
 
 
     var show = <?php echo $show; ?>;
     if(show == 1){
-      $(".homec").hide();
+      $(".homec").css("display","none");
       $(".productc").fadeIn("fast");   
-      $(".categoryc").hide();                                               
-      $(".orderc").hide();                 
-      $(".msgc").hide(); 
+      $(".categoryc").css("display","none");                                               
+      $(".orderc").css("display","none");                 
+      $(".msgc").css("display","none"); 
     }else if(show == 2){
       $(".homec").fadeIn("fast");
-      $(".productc").hide();   
-      $(".categoryc").hide();                                               
-      $(".orderc").hide();                 
-      $(".msgc").hide(); 
+      $(".productc").css("display","none");   
+      $(".categoryc").css("display","none");                                               
+      $(".orderc").css("display","none");                 
+      $(".msgc").css("display","none"); 
     }else if(show == 3){
-      $(".homec").hide();
-      $(".productc").hide();   
+      $(".homec").css("display","none");
+      $(".productc").css("display","none");   
       $(".categoryc").fadeIn("fast");                                               
-      $(".orderc").hide();                 
-      $(".msgc").hide(); 
+      $(".orderc").css("display","none");                 
+      $(".msgc").css("display","none"); 
     }else if(show == 4){
-      $(".homec").hide();
-      $(".productc").hide();   
-      $(".categoryc").hide();                                               
+      $(".homec").css("display","none");
+      $(".productc").css("display","none");   
+      $(".categoryc").css("display","none");                                               
       $(".orderc").fadeIn("fast");                 
-      $(".msgc").hide(); 
+      $(".msgc").css("display","none"); 
     }else if(show == 5){
-      $(".homec").hide();
-      $(".productc").hide();   
-      $(".categoryc").hide();                                               
-      $(".orderc").hide();                 
+      $(".homec").css("display","none");
+      $(".productc").css("display","none");   
+      $(".categoryc").css("display","none");                                               
+      $(".orderc").css("display","none");                 
       $(".msgc").fadeIn("fast"); 
+    }else if(show == 6){
+      $(".homec").css("display","none");
+      $(".productc").css("display","none");   
+      $(".categoryc").css("display","none");                                               
+      $(".orderc").css("display","none");                 
+      $(".orderlc").fadeIn("slow");                 
+      $(".msgc").css("display","none"); 
     }
 
     //category div
@@ -514,6 +557,57 @@ if(isset($_GET['location'])){
         });
       }
     });
+    $('#confrm').click(function(){
+    var id = $("input[name='id']:checked").val();
+    if(typeof(id) == "undefined"){
+      alert("Please Select a Order");
+    }else{
+      $.post("../validate/changes.php",{"status":"confirmed","id":id},function(responce){
+        alert(responce);
+        location.href = "index.php?location=order";
+      })
+    }
+    });
+    $('#cmplt').click(function(){
+    var id = $("input[name='id']:checked").val();
+    if(typeof(id) == "undefined"){
+      alert("Please Select a Order");
+    }else{
+      $.post("../validate/changes.php",{"status":"complete","id":id},function(responce){
+        alert(responce);
+        location.href = "index.php?location=order";
+      })
+    }
+    });
+    $('#ship').click(function(){
+    var id = $("input[name='id']:checked").val();
+    if(typeof(id) == "undefined"){
+      alert("Please Select a Order");
+    }else{
+      $.post("../validate/changes.php",{"status":"shipped","id":id},function(responce){
+        alert(responce);
+        location.href = "index.php?location=order";
+      })
+    }
+    });
+    $('#delivered').click(function(){
+    var id = $("input[name='id']:checked").val();
+    if(typeof(id) == "undefined"){
+      alert("Please Select a Order");
+    }else{
+      $.post("../validate/changes.php",{"status":"delivered","id":id},function(responce){
+        alert(responce);
+        location.href = "index.php?location=list";
+      })
+    }
+    });
+  $(document).ready(function(){
+    setInterval(function(){
+      $.post("../validate/info.php",{"info":"fetch"},function(res){
+        $("#info").html(res);
+      });
+    }, 500);
+  });
   </script>
 </body>
 </html>

@@ -2,45 +2,102 @@ $(document).ready(function(){
     //home
     $("#home").on("click",function(){
         $(".homec").fadeIn("fast");
-        $(".productc").hide();                                                 
-        $(".categoryc").hide();                 
-        $(".orderc").hide();                 
-        $(".msgc").hide();                 
+        $(".productc").css("display","none");                                                 
+        $(".categoryc").css("display","none");                 
+        $(".orderc").css("display","none");                 
+        $(".msgc").css("display","none");        
+        $(".orderlc").css("display","none");         
     });
 
     //products
     $("#product").on("click",function(){
-        $(".homec").hide();
+        $(".homec").css("display","none");
         $(".productc").fadeIn("fast");                                                 
-        $(".categoryc").hide();                 
-        $(".orderc").hide();                 
-        $(".msgc").hide(); 
+        $(".categoryc").css("display","none");
+        $(".orderc").css("display","none");                 
+        $(".msgc").css("display","none"); 
+        $(".orderlc").css("display","none");
     });
 
     //categories
     $("#category").on("click",function(){
-        $(".homec").hide();
-        $(".productc").hide();                                                 
-        $(".categoryc").fadeIn("slow");                 
-        $(".orderc").hide();                 
-        $(".msgc").hide(); 
+        $(".homec").css("display","none");
+        $(".productc").css("display","none");                                                 
+        $(".categoryc").fadeIn("fast");                 
+        $(".orderc").css("display","none");                 
+        $(".msgc").css("display","none"); 
+        $(".orderlc").css("display","none");
     });
 
     //orders
     $("#order").on("click",function(){
-        $(".homec").hide();
-        $(".productc").hide();   
-        $(".categoryc").hide();                                               
-        $(".orderc").fadeIn("slow");                 
-        $(".msgc").hide(); 
+        $(".homec").css("display","none");
+        $(".productc").css("display","none");   
+        $(".categoryc").css("display","none");                                               
+        $(".orderc").fadeIn("fast");                 
+        $(".msgc").css("display","none"); 
+        $(".orderlc").css("display","none");
     });
 
     //messages
     $("#msg").on("click",function(){
-        $(".homec").hide();
-        $(".productc").hide();   
-        $(".categoryc").hide();                                               
-        $(".orderc").hide();                 
-        $(".msgc").fadeIn("slow"); 
+        $(".homec").css("display","none");
+        $(".productc").css("display","none");   
+        $(".categoryc").css("display","none");                                               
+        $(".orderc").css("display","none");                 
+        $(".msgc").fadeIn("fast"); 
+        $(".orderlc").css("display","none"); 
     });
+
+    //list
+    $("#orderl").on("click",function(){
+        $(".homec").css("display","none");
+        $(".productc").css("display","none");   
+        $(".categoryc").css("display","none");                                               
+        $(".orderc").css("display","none");                 
+        $(".msgc").css("display","none");
+        $(".orderlc").fadeIn("fast"); 
+    });
+});
+
+
+$(document).ready(function(){
+    $("#home").click(function(){
+        $(".homec").fadeIn("fast");
+        $(".orderlistc").css("display","none");
+        $(".trackc").css("display","none");
+        $(".chatc").css("display","none");
+        $(".suggestc").css("display","none");
+      });
+      $("#shop").click(function(){
+        location.href = "../";
+      });
+      $("#orderlist").click(function(){
+        $(".orderlistc").fadeIn("fast");
+        $(".homec").css("display","none");
+        $(".trackc").css("display","none");
+        $(".chatc").css("display","none");
+        $(".suggestc").css("display","none");
+      });
+      $("#track").click(function(){
+        $(".trackc").fadeIn("fast");
+        $(".homec").css("display","none");
+        $(".orderlistc").css("display","none");
+        $(".chatc").css("display","none");
+        $(".suggestc").css("display","none");
+      });
+      $("#chat").click(function(){
+        $(".chatc").fadeIn("fast");
+        $(".trackc").css("display","none");
+        $(".homec").css("display","none");
+        $(".orderlistc").css("display","none");
+        $(".suggestc").css("display","none");
+      });
+      $("#suggest").click(function(){
+        $(".suggestc").fadeIn("fast");
+        $(".chatc").css("display","none");
+        $(".trackc").css("display","none");
+        $(".homec").css("display","none");
+        $(".orderlistc").css("display","none");
+      });
 });
