@@ -74,7 +74,7 @@
               echo '<div class="card-body">';
               echo '<h5 class="card-title">'.$name.'</h5>';
               echo '<p class="card-text">Price Range: <i class="fas fa-rupee-sign"></i> '.$price_range.'</p>';
-              echo '<a href="'.$link.'" class="btn btn-success">Buy</a>';
+              echo '<a href="'.$link.'" class="btn btn-success">Shop Now</a>';
               echo '</div>';
               echo '</div>';
               echo '</div>';
