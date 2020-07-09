@@ -86,7 +86,7 @@
         ?>
       </h2>
       <p>
-        <ul>
+        <ul id="info">
         </ul>
       </p>
     </div>
@@ -228,6 +228,14 @@
     </div>
   </div>
 <script>
+$(document).ready(function(){
+  setInterval(function(){
+    var userinfo = "<?php echo $_SESSION['user']; ?>";
+    $.post("../validate/clientinfo.php",{getinfo:userinfo}).done(function(res){
+      $("#info").html(res);
+    });
+  }, 500);
+});
 </script>
 </body>
 </html>
