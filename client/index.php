@@ -87,18 +87,6 @@
       </h2>
       <p>
         <ul>
-          <?php
-            $query = "SELECT * FROM products WHERE status = 'active' AND quantity <= 5";
-            $result = mysqli_query($conn,$query);
-            if(!$result){
-              die();
-            }else{
-              while($row = mysqli_fetch_assoc($result)){
-                $name = $row['name'];
-                echo '<li class="redmsg">'.$name.' is low On Stock</li>';
-              }
-            }
-          ?>
         </ul>
       </p>
     </div>
@@ -176,6 +164,7 @@
                 <th scope="col">Product</th>
                 <th scope="col">Status</th>
                 <th scope="col">Work In Progress</th>
+                <th scope="col">Tracking Id</th>
                 <th scope="col">Date</th>
               </tr>
             </thead>
@@ -202,6 +191,7 @@
                     $id = $row['id'];
                     $status = $row['status'];
                     $date = $row['date'];
+                    $trackind_id = $row['tracking_id'];
                     echo '<tr>';
                     echo '<th scope="row"><input type="radio" name="id" id="id" value="'.$id.'"></th>';
                     echo '<th>'.$order_id.'</th>';
@@ -209,6 +199,16 @@
                     echo '<th>'.$status.'</th>';
                     if($status == "processing"){
                       echo '<th>Order Received</th>';
+                      echo '<th>...</th>';
+                    }else if($status == "confirmed"){
+                      echo '<th>Order Approved By Seller</th>';
+                      echo '<th>...</th>';
+                    }else if($status == "complete"){
+                      echo '<th>Your Product Is Ready</th>';
+                      echo '<th>...</th>';
+                    }else if($status == "shipped"){
+                      echo '<th>Product Is On The Way </th>';
+                      echo '<th>'.$trackind_id.'</th>';
                     }
                     echo '<th>'.$date.'</th>';
                     echo '</tr>';
